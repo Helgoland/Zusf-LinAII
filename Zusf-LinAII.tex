@@ -1,0 +1,156 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% THE BEER-WARE LICENSE (Revision 42):                                            %
+% <r@twopi.eu> schrieb diese Datei. Solange Sie diesen Vermerk nicht entfernen,   %
+% können Sie mit dem Material machen, was Sie möchten. Wenn wir uns eines Tages   %
+% treffen und Sie denken, das Material ist es wert, können Sie mir dafür ein Bier %
+% ausgeben. Robert Hemstedt                                                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8x]{inputenc}
+%\usepackage{ucs}
+\usepackage[left=2.0cm, right=2.0cm, top=2.0cm, bottom=2.0cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[ngerman]{babel}
+\usepackage{bbm}
+\usepackage{amssymb}
+\usepackage[amsthm,thmmarks]{ntheorem}
+%\usepackage{tabularx}
+\usepackage[arrow, matrix, curve]{xy}
+\usepackage{graphicx}
+% b) Lemma, Satz, Theorem usw.
+\makeatletter
+\renewtheoremstyle{plain}%
+  {\item[\hskip\labelsep \theorem@headerfont ##1\ ##2:]}%
+  {\item[\hskip\labelsep \theorem@headerfont ##1~##2~##3:]\mbox{}}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{Theorem}{Theorem}[section]
+\newtheorem{Satz}[Theorem]{Satz}
+\newtheorem{Prop}[Theorem]{Proposition}
+\newtheorem{Lemma}[Theorem]{Lemma}
+\newtheorem{Korollar}[Theorem]{Korollar}
+\newtheorem{Definition}[Theorem]{Definition}
+\newtheorem*{Folgerung}[Theorem]{Folgerung}
+\newtheorem*{Behauptung}[Theorem]{Behauptung}  
+\newtheorem{bez}[Theorem]{Bezeichnung}
+
+\theorembodyfont{\upshape}
+\newtheorem{Bemerkung}[Theorem]{Bemerkung} 
+\newtheorem{Beispiel}[Theorem]{Beispiel}
+
+\newcommand{\herv}[1]{{\emph{\textbf{#1}}}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\cupdot}{\mathbin{\dot{\cup}}}
+
+\def\presuper#1#2%
+  {\mathop{}%
+   \mathopen{\vphantom{#2}}^{#1}%
+   \kern-\scriptspace%
+   #2}
+
+\numberwithin{equation}{section}
+
+\newsavebox{\fmbox}
+\newenvironment{fmpage}[1]
+{\begin{lrbox}{\fmbox}\begin{minipage}{#1}}
+{\end{minipage}\end{lrbox}\fbox{\usebox{\fmbox}}}
+
+\linespread{1.05}
+\author{Robert Hemstedt \\ \texttt{r@twopi.eu}}
+\title{Zusammenfassung\footnote{nach meinen pers\"onlichen Aufzeichnungen} Lineare Algebra II\newline \newline \large{gehalten von Prof. Dr. Stefan Schwede, Universität Bonn} \\im Sommersemester 2013}
+\begin{document}
+\maketitle
+\section*{Hinweise zur Verwendung}
+Die stets aktuelle Version dieser Zusammenfassung lässt sich finden unter\\
+\texttt{http://github.com/euklid/Zusf-LinAII} .\\
+Dort sind auch die \texttt{.tex}-Dateien zu finden, wenn man selbst Veränderungen vornehmen möchte. Bitte beachtet die \textbf{Lizenzhinweise}.\\
+
+Werter Kommilitone, diese Zusammenfassung basiert zum größten Teil auf meinen Mitschriften unserer LA-Vorlesungen bei Prof. Dr. Schwede sowie teilweise auf dem Fischer\footnote{Gerd Fischer, Lineare Algebra, 17.Auflage, Vieweg+Teubner Verlag}. 
+
+Was die Nummerierung der Sätze und Kapitelabschnitte angeht, so ist sie nicht mit der aus dem Fischer identisch.
+
+Gedacht ist diese Zusammenfassung explizit als Prüfungsvorbereitung und wird daher auch noch bis zur letzten Vorlesung weiterhin ergänzt. Wenn du Anmerkungen, Ergänzungen, Lob oder Kritik haben solltest, dann sprich mich einfach an, schick mir eine E-Mail oder, was das beste wohl ist, benutze \texttt{github.com}, um mir eine \textit{pull}-Request zu schicken.
+
+Ich hafte weder für \glqq fehlende\grqq\ Inhalte noch für inhaltliche oder sprachliche Fehler.
+
+Ich hoffe, dass diese Zusammenfassung und der damit verbundene Aufwand sich nicht nur für mich als Verfasser, sondern auch noch für dich als Kommilitone lohnen wird und der Aufwand auch in Form einer möglichst guten Klausurnote entlohnt wird. \\
+Viel Spaß beim Lernen!
+\section*{Lizenz}
+Ich veröffentliche dieses Dokument unter der Beerware-Lizenz:\\ \\
+\hspace{-3.5cm}
+\begin{fmpage}{\textwidth}
+\glqq THE BEER-WARE LICENSE\grqq\ (Revision 42):\\
+\texttt{$<$r@twopi.eu$>$} schrieb diese Datei. Solange Sie diesen Vermerk nicht entfernen, können Sie mit dem Material machen, was Sie möchten. Wenn wir uns eines Tages treffen und Sie denken, das Material ist es wert, können Sie mir dafür ein Bier ausgeben. Robert Hemstedt
+\end{fmpage}
+\hspace{3.5cm} \\
+Weitere Hinweise lassen sich finden unter: \texttt{http://de.wikipedia.org/wiki/Beerware}
+\section{Eigenwerte}
+Nun: $F: V \rightarrow V$ ein Endomorphismus. Gesucht ist eine Basis $\mathcal{B}$ von $V$, so dass $M^{\mathcal{B}}_\mathcal{B}(F)$ eine möglichst einfache Form hat. Äquivalentes Problem: zu $A\in M(n\times n,K)$ finde man $S\in GL(n,K)$, sodass $S\cdot A\cdot S^{-1}$ \glqq einfache\grqq Form hat. Mit anderen Worten: $M(n,K)$ verstehen bis auf Ähnlichkeit.
+\begin{Beispiel} Sei $\dim(V)=1$ und $F:V\rightarrow V$ ein Endomorphismus. Sei $v\in V, v\neq 0$, dann gibt es genau ein $\lambda \in K$ mit $F(v))\lambda v$. Dieses $\lambda$ ist unabhängig von v.
+\end{Beispiel}
+\begin{Definition} Sei F ein Endomorphismus eines K-Vektorraums V. Ein $\lambda\in K$ heißt \herv{Eigenwert} von F, falls es $v\in V, v\neq 0$ gibt mit $F(v)=\lambda \cdot v$. v heißt Eigenvektor zum Eigenwert $\lambda$.\\
+Beachte: Der Eigenwert $\lambda=0$ ist zulässig, aber Eigenvektoren sind immer $\neq 0$.
+\end{Definition}
+\begin{Bemerkung}
+Sei $\lambda=0$ Eigenwert und Eigenvektor $v\neq 0$, also $F(v)=0, v\neq 0\Rightarrow 0$ ist Eigenwert von $F \Leftrightarrow F$ ist nicht injektiv.   
+\end{Bemerkung}
+\begin{Definition}
+Ein Endomorphismus eines Vektorraums heißt \herv{diagonalisierbar}, falls es eine Basis aus Eigenvektoren gibt.
+\end{Definition}
+\begin{Bemerkung}
+Sei $\dim(V)<\infty$, dann ist $F:V\rightarrow V$ genau dann diagonalisierbar, wenn es eine Basis $\mathcal{B}$ von $V$ gibt mit $M\mathcal{B}^\mathcal{B}(F)=\begin{pmatrix}
+\lambda_1 & 0 \\ 0 & \lambda_2 \end{pmatrix}$ für $\lambda_1,\ldots,\lambda_n\in K$. \\
+Sei $A\in M(n\times n, K)$, aufgefasst als Endomorphismus von $K^n$. Dann ist $A$ diagonalisierbar, wenn es ein $S\in GL(n,K)$ gibt, mit  $S\cdot A\cdot S^{-1} = \begin{pmatrix}
+\lambda_1 & 0 \\ 0 &\lambda_2 \end{pmatrix}$ mit $\lambda_1,\ldots,\lambda_n \in K \Leftrightarrow A\cdot S^{-1} = S^{-1}\cdot\begin{pmatrix} \lambda_1 & 0 \\ 0 &\lambda_2 \end{pmatrix}$ \\
+Die Spalten von $S^{-1}$ sind die Basis aus Eigenvektoren. \\
+Vorsicht: Wenn $F$ diagonalisierbar ist, so ist i.A. trotzdem nicht jeder Vektor ein Eigenvektor.
+\end{Bemerkung}
+\begin{Lemma}
+Sei $F:V\rightarrow V$ ein Endomorphismus und $(v_1,\ldots,v_m)$ Eigenvektoren zu paarweise verschiedenen Eigenwerten. Dann ist $(v_1,\ldots,v_m)$ linear unabhängig. Insbesondere gilt $m\leq \dim(V)$.
+\end{Lemma}
+\begin{Satz}
+Sei $F\in \operatorname{End}(V)$ mit $n=\dim(V)<\infty$. Angenommen F hat n paarweise verschiedene Eigenwerte. Dann ist F diagonalisierbar.
+\end{Satz}
+\begin{Definition} Sei $F$ ein Endomorphismus eines Vektorraums V und $\lambda \in K$. Der \herv{Eigenraum} $\operatorname{Eig}(F;\lambda)$ von F zu $\lambda$ ist definiert als \[
+\operatorname{Eig}(F;\lambda)=\{v\in V: F(v)=\lambda\cdot v\}=\{\text{Eigenvektoren von }F\text{zum Eigenwert }\lambda\}\cup \{0\}
+\]
+\end{Definition}
+\begin{Bemerkung} \mbox{ }
+\begin{enumerate}
+\renewcommand{\labelenumi}{\alph{enumi})}
+\item $\operatorname{Eig}(F;\lambda)$ ist ein Untervektorraum von $V$.
+\item $\lambda$ ist Eigenwert von $F \Leftrightarrow \operatorname{Eig}(F;\lambda)\neq \{0\}$.
+\item $\operatorname{Eig}(F;\lambda)\setminus\{0\}$ ist die Menge der Eigenvektoren zum Eigenwert $\lambda$.
+\item $\operatorname{Eig}(F;\lambda)=\operatorname{Ker}(F - \lambda Id_V )$.
+\item Sind $\lambda_1, \lambda_2$ verschieden, so ist $\operatorname{Eig}(F;\lambda_1)\cap \operatorname{Eig}(F;\lambda_2)=\{0\}$.
+\end{enumerate}
+\end{Bemerkung}
+\subsection{Methode zur Bestimmung von Eigenwerten: Das charakteristische Polynom}
+\begin{Bemerkung}
+Sei $F:V\rightarrow V$ Endomorphismus und $\lambda \in K, \dim(V)<\infty$. Dann sind äquivalent: \begin{enumerate}
+\renewcommand{\labelenumi}{\roman{enumi})}
+\item $\lambda$ ist Eigenwert von $F$.
+\item $\det(F-\lambda\cdot Id_V) = 0$.
+\end{enumerate}
+Mit anderen Worten, die Eigenwerte von $F$ sind genau die Nullstellen der Funktion $\tilde{P}_F : K\rightarrow K, \lambda \mapsto \det(F - \lambda\cdot Id_V)$, die \textbf{charakteristische Funktion} von $F$.
+\end{Bemerkung}
+\underline{Ziel:} $\tilde{P}_F$ ist die Polynomfunktion eines bestimmten Polynoms $P_F\in K[t]$.\\
+Sei $F:V\rightarrow V$ Endomorphismus, $\dim(V)<\infty$, sei $\mathcal{A}$ eine Basis von $V$. Sei $M(n\times n,K) \ni A=M_\mathcal{A}^\mathcal{A}(F)$ die darstellende Matrix. Betrachte $K$ als Unterring von $K[t]$ und dann auch $A$ als Matrix mit Einträgen in $K[t]$. Bilde die Matrix $A-t\cdot E_n \in M(n\times n, K[t])$.\[
+A-t\cdot E_n = \begin{pmatrix}
+a_{11}-t & a_{12} & \cdots & a_{1n} \\
+a_{21} & a_{22}-t & \cdots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{n1} & a_{n2} & \cdots & a_{nn}-t
+\end{pmatrix}
+\]
+\begin{Definition}
+Das charakterischtische Polynom von $F\in\operatorname{End}(V)$ (bezüglich der Basis $\mathcal{A}$) ist definiert als $P_F=\det(A-t\cdot E_n)\in K[t]$, wobei $A=M_\mathcal{A}^\mathcal{A}(F)$.
+\end{Definition}
+\end{document}
