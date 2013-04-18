@@ -92,6 +92,7 @@ Ich veröffentliche dieses Dokument unter der Beerware-Lizenz:\\ \\
 \hspace{3.5cm} \\
 Weitere Hinweise lassen sich finden unter: \texttt{http://de.wikipedia.org/wiki/Beerware}
 \section{Eigenwerte}
+\subsection{Eigenwerte und Eigenvektoren}
 Nun: $F: V \rightarrow V$ ein Endomorphismus. Gesucht ist eine Basis $\mathcal{B}$ von $V$, so dass $M^{\mathcal{B}}_\mathcal{B}(F)$ eine möglichst einfache Form hat. Äquivalentes Problem: zu $A\in M(n\times n,K)$ finde man $S\in GL(n,K)$, sodass $S\cdot A\cdot S^{-1}$ \glqq einfache\grqq Form hat. Mit anderen Worten: $M(n,K)$ verstehen bis auf Ähnlichkeit.
 \begin{Beispiel} Sei $\dim(V)=1$ und $F:V\rightarrow V$ ein Endomorphismus. Sei $v\in V, v\neq 0$, dann gibt es genau ein $\lambda \in K$ mit $F(v))\lambda v$. Dieses $\lambda$ ist unabhängig von v.
 \end{Beispiel}
@@ -101,6 +102,7 @@ Beachte: Der Eigenwert $\lambda=0$ ist zulässig, aber Eigenvektoren sind immer 
 \begin{Bemerkung}
 Sei $\lambda=0$ Eigenwert und Eigenvektor $v\neq 0$, also $F(v)=0, v\neq 0\Rightarrow 0$ ist Eigenwert von $F \Leftrightarrow F$ ist nicht injektiv.   
 \end{Bemerkung}
+\subsection{Diagonalisierung von Endomorphismen}
 \begin{Definition}
 Ein Endomorphismus eines Vektorraums heißt \herv{diagonalisierbar}, falls es eine Basis aus Eigenvektoren gibt.
 \end{Definition}
@@ -151,6 +153,115 @@ a_{n1} & a_{n2} & \cdots & a_{nn}-t
 \end{pmatrix}
 \]
 \begin{Definition}
-Das charakterischtische Polynom von $F\in\operatorname{End}(V)$ (bezüglich der Basis $\mathcal{A}$) ist definiert als $P_F=\det(A-t\cdot E_n)\in K[t]$, wobei $A=M_\mathcal{A}^\mathcal{A}(F)$.
+Das charakteristische Polynom von $F\in\operatorname{End}(V)$ (bezüglich der Basis $\mathcal{A}$) ist definiert als $P_F=\det(A-t\cdot E_n)\in K[t]$, wobei $A=M_\mathcal{A}^\mathcal{A}(F)$.
 \end{Definition}
+\subsubsection{Exkurs Quotientenk\"orper}
+Sei $R$ ein kommutativer, nullteilerfreier Ring mit 1$\neq 0$. Wir konstruieren den \textbf{Quotientenk\"orper} $\operatorname{Quot}(R)$ mit injektivem Ringhomomorphismus $R \rightarrow \operatorname{Quot}(R)$. \\
+Beispiel: $\operatorname{Quot}(K[t]) = K(t)$ (K\"orper der rationalen Funktionen), $\operatorname{Quot}(\Z) = \Q$, $\operatorname{Quot}(K) \cong K$.
+\paragraph*{\glqq Br\"uche\grqq\ } Wir betrachten Paare $(r,s)\in R^2$ mit $s\neq 0$. Wir betrachten die \"Aquivalenzrelation auf solchen Paaren: $(r,s) \sim (r',s') \Leftrightarrow r\cdot s' = r'\cdot s$.\\
+Wir definieren $\operatorname{Quot}(R)$ als die Menge der \"Aquivalenzklassen von solchen Paaren $\frac{r}{s}$ f\"ur die \"Aquivalenzklasse von $(r,s)$:\\
+$\operatorname{Quot}(R)=\{\frac{r}{s}:r,s\in R, s\neq 0 \}$. \\
+Addition: $\frac{r}{s}+\frac{r'}{s'}:+\frac{r\cdot s'+r'\cdot s}{s\cdot s'}$;\quad Multiplikation: $\frac{r}{s}\cdot\frac{r'}{s'}+\frac{r\cdot r'}{s\cdot s'}$, wobei immer $s\cdot s'\neq 0$. \\
+Diese Operationen sind wohldefiniert und erf\"ullen die Eigenschaften kommutativer Ringe.
+Neutrales Element bez\"uglich $+$: $0=\frac{0}{1}$ \\
+Neutrales Element bez\"uglich $\cdot$: $\frac{1}{1}$ , $1\neq 0$. \\
+Inverses bez\"uglich $\cdot$: Ist $0\neq \frac{r}{s} \in \operatorname{Quot}(R)$, dann ist $\frac{s}{r} \in \operatorname{Quot}(R)$ das multiplikative Inverse.\\
+Wir betrachten die Abbildung $\eta: R \rightarrow \operatorname{R}; r\mapsto \frac{r}{1}$. $\eta$ ist injektiv. Wir k\"onnen also $R$ als Unterring des K\"orpers $\operatorname{Quot}(R)$ auffassen.
+
+Sei $K$ ein K\"orper, dann ist $K(t)=\operatorname{Quot}(K[t])$ der K\"orper der rationalen Funktionen. \\
+Sei jetzt $A\in M(n\times n;K)$. Dann ist $A-t\cdot E_n\in M(n\times n;K[t])$ die Matrix mit den Koeffizienten $(A-t\cdot E_n)_{ij}=a_{ij}-t\cdot \delta_{ij}$, wobei $\delta$ das Kronecker-Delta bezeichnet.
+\begin{Definition}
+Das charakteristische Polynom von $A\in M(n\times n,K)$ ist $P_A=\det(A-t\cdot E_n) \in K[t]$.
+\end{Definition}
+\begin{Lemma}
+\"Ahnliche Matrizen haben dasselbe charakteristische Polynom.
+\end{Lemma}
+\begin{Definition}
+Sei $\dim(V)=n<\infty$ und $F\in \operatorname{End}(V)$. Sei $\mathcal{B}$ eine Basis von V. Dann ist das Polynom $P_F=P_{M^\mathcal{B}_\mathcal{B}(F)}=\det(M^\mathcal{B}_\mathcal{B}(F)-t\cdot E_n)\in K[t]$ unabh\"angig von $\mathcal{B}$ und heißt das charakteristische Polynom von F.
+\end{Definition}
+\begin{Satz}
+Sei $F\in \operatorname{End}(V)$, $\dim(V)n.$ Dann hat das charakteristische Polynom die folgenden Eigenschaften:
+\begin{enumerate}
+\renewcommand{\labelenumi}{\emph{\arabic{enumi})}}
+\item $\deg(P_F)=n$.
+\item $P_F$ beschreibt die Abbildung $K\rightarrow K, \lambda \mapsto P_F(\lambda)=\det(F-\lambda Id_V)$ Dies benutzt: für $C\in M(n\times n; K[t])$ und $\lambda \in K$ gilt $\underbrace{\det(C)}_{\in K[t]}(\lambda) = \det(\underbrace{C(\lambda)}_{\in M(n\times n;K})$, wobei $(C(\lambda))_{ij}=(c_{ij}(\lambda))$.
+\item Die Nullstellen von $P_F$ sind die Eigenwerte von F.
+\item Ist A eine darstellende Matrix von F, dann gilt $P_F=\det(A-\lambda\cdot E_n)$.
+\end{enumerate}
+\end{Satz}
+\paragraph*{Zusammengefasst} $F\in \operatorname{End}(V), \dim(V)\leq n < \infty$ \\
+$P_F$ ist das Produkt von $n$ verschiedene Linearfaktoren $(\Leftrightarrow P_F$ hat $n$ verschiedene Nullstellen$) \Rightarrow F$ diagonalisierbar $\Rightarrow P_F$ zerfällt in Linearfaktoren (nicht notwendigerweise verschieden) $\Leftrightarrow F$ ist trigonalisierbar. \\
+Es bleibt, den Fall zu untersuchen, dass $P_F$ in Linearfaktoren zerfällt, aber nicht (notwendig) in verschiedene.\\
+Sei $P_F=\pm (t-\lambda_1)^{r_1}\cdot \ldots \cdot(t-\lambda_k)^{r_k}$ mit paarweise verschiedenen $\lambda_i$'s, $r_i\geq 1$.\\
+$r_1+\ldots+r_k=n=\dim(V)$, $r_i=\mu(P_F,\lambda_i)$
+\begin{Lemma}
+Ist $\lambda$ ein Eigenwert von $F\in\operatorname{End}(V)$, dann gilt $1\leq \dim(\operatorname{Eig}(F;\lambda))\leq \mu(P_F;\lambda)$.
+\end{Lemma}
+\begin{Satz}
+Sei $\dim(V)=n<\infty, F\in \operatorname{End}(V)$. Dann sind äquivalent:
+\begin{enumerate}
+\renewcommand{\labelenumi}{\emph{\roman{enumi})}}
+\item F ist diagonalisierbar.
+\item \begin{enumerate}
+\renewcommand{\labelenumii}{\emph{\alph{enumii})}}
+\item $P_F$ zerfällt in Linearfaktoren und
+\item Für alle Eigenwerte $\lambda$ von F gilt $\dim(\operatorname{Eig}(F;\lambda))=\mu(P_F;\lambda)$.
+\end{enumerate}
+\item Sind $\lambda_1, \ldots, \lambda_k$ die verschiedenen Eigenwerte von F, dann gilt $V=\operatorname{Eig}(F,\lambda_1)\oplus \ldots \oplus \operatorname{Eig}(F,\lambda_k)$.
+\end{enumerate}
+\end{Satz}
+\paragraph{Methode zur Diagonalisierung eines Endomorphismus $\mathbf{F}$}
+\begin{itemize}
+\item Bestimme eine Basis $\mathcal{B}$ von V.
+\item Berechne die darstellende Matrix $A=M^\mathcal{B}_\mathcal{B}(F)$.
+\item Berechne das charakteristische Polynom $P_F=\det(A-t\cdot E_n)$.
+\item Bestimme die Nullstellen von $P_F$ (mit Vielfachheiten).
+\item Für alle Nullstellen $\lambda$ von $P_F$ bestimme $\operatorname{Ker}(F-\lambda\cdot Id_V)=\operatorname{Eig}(F;lambda)$.
+\item Falls für alle Eigenwerte $\lambda$ gilt: $\dim(\operatorname{Eig}(F;\lambda))=\mu(F;\lambda)$, dann ist $F$ diagonalisierbar, sonst nicht.
+\end{itemize}
+\subsubsection{Simultane Diagonalisierung}
+\underline{Frage:} Seien $A,B\in M(n\times n,K)$ diagonalisierbar. Gibt es $S\in GL(n,K)$, sodass $S\cdot A\cdot S^{-1}=D$ und $S\cdot B \cdot S^{-1}=\tilde{D}$ Diagonalmatrizen sind?\\
+Wenn das gilt, dann gilt: $A\cdot B = B\cdot A \Rightarrow$ $A$ und $B$ kommutieren.
+\begin{Satz}
+Seien F und G zwei diagonalisierbare Endomorphismen eines endlichdimensionalen Vektorraums. Dann sind äquivalent:
+\begin{enumerate}
+\renewcommand{\labelenumi}{\emph{\roman{enumi})}}
+\item F und G sind simultan diagonalisierbar $\Leftrightarrow$ es gibt eine Basis $\mathcal{B}$ von F, die aus Eigenvektoren von F und G besteht.
+\item $F \circ G= G\circ F$.
+\end{enumerate}
+\end{Satz}
+\begin{Definition}
+Sei $W\subseteq V$ ein Untervektorraum und $F\in\operatorname{End}(V)$. $W$ heißt \herv{F-invariant}, falls $F(W)\subseteq W$.
+\end{Definition}
+\subsection{Trigonalisierbarkeit}
+\begin{Beispiel} $A=\begin{pmatrix} 0 & 1 \\ 0 & 0\end{pmatrix}$ hat $P_A=t^2$ ist eben nicht diagonalisierbar.
+\end{Beispiel}
+\begin{Bemerkung}
+Sei $W\subseteq V$ ein $F$-invarianter Untervektorraum und $F\in\operatorname{End}(V)$. Dann ist $P_{F_{|W}}$ ein Teiler von $P_F$.
+\end{Bemerkung}
+\begin{Definition}
+Eine \herv{Fahne} in einem Vektorraum V, $\dim(V)=n$, ist die Kette geschachtelter Vektorräume \[\{0\}=V_0\subseteq V_1 \subseteq V_2 \subseteq \ldots \subseteq\ V_i \subseteq\ldots\subseteq V_n=V \] mit $\dim(V_i)=i$. Für $F\in\operatorname{End}(V)$ heißt die Fahne F-invariant, falls $F(V_i)\subset V_i$ für alle  $i=0,\ldots,n$.
+\end{Definition}
+\begin{Bemerkung}
+Für $F\in\operatorname{End}(K)$ sind äquivalent:
+\begin{enumerate}
+\renewcommand{\labelenumi}{\roman{enumi})}
+\item Es gibt eine $F$-invariante Fahne von $V$.
+\item $F$ ist trigonalisierbar, d.h. es gibt eine Basis $\mathcal{B}$ in $V$, so dass $M_\mathcal{B}^\mathcal{B}(F)$ eine obere Dreiecksmatrix ist.
+\end{enumerate}
+\end{Bemerkung}
+\begin{Definition}
+Eine Matrix $A\in M(n\times n,K)$ heißt trigonalisierbar, falls es $S\in GL(n,K)$ gibt, so dass $S\cdot A\cdot S^{-1}$ eine obere Dreiecksmatrix ist. $\Leftrightarrow$ A ist trigonalisierbar als Endomorphismus von $K^n$.
+\end{Definition}
+\begin{Satz}[Trigonalisierungssatz]
+Für einen Endomorphismus F eines n-dimensionalen Vektorraums V sind äquivalent:
+\begin{enumerate}
+\renewcommand{\labelenumi}{\emph{\roman{enumi})}}
+\item F ist trigonalisierbar.
+\item Das charakteristische Polynom zerfällt in Linearfaktoren.
+\end{enumerate}
+\end{Satz}
+\begin{Korollar}
+Jeder Endomorphismus eines endlich-dimensionalen Vektorraums über einen algebraisch abgeschlossenen Körper (z.B. $\C$) ist trigonalisierbar.
+\end{Korollar}
 \end{document}
